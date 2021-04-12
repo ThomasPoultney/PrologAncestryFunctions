@@ -1,0 +1,66 @@
+parent(queenmother,elisabeth). 
+parent(elisabeth,charles).
+parent(elisabeth,andrew). 
+parent(elisabeth,anne).
+parent(elisabeth,edward).
+parent(diana,william).
+parent(diana,harry). 
+parent(sarah,beatrice).
+parent(anne,peter). 
+parent(anne,zara).
+parent(george,elisabeth).
+parent(philip,charles).
+parent(philip,andrew). 
+parent(philip,edward).
+parent(charles,william). 
+parent(charles,harry).
+parent(andrew,beatrice). 
+parent(andrew,eugene).
+parent(mark,peter).
+parent(mark,zara).
+parent(william,georgejun).
+parent(kate,georgejun).
+parent(william,charlotte).
+parent(kate,charlotte).
+parent(phillip,anne). 
+parent(william,louis).
+parent(kate,louis).
+
+the_royal_females([queenmother,elisabeth,anne,diana,sarah,beatrice,zara,eugene,kate,charlotte,louis)].
+the_royal_males([charles,andrew,edward,william,harry,peter,george,philip,mark,phillip,georgejun]).
+the_royal_family([queenmother,elisabeth,anne,diana,sarah,beatrice,zara,eugene,kate,charlotte,louis,charles,andrew,edward,william,harry,peter,george,philip,mark,phillip,georgejun]).
+
+%3
+mother(X,Y) :- the_royal_females(X), parent(X,Y).
+%4
+ancestor(X,Y) :- parent(Y,X).
+ancestor(X,Y) :- parent(Y,Z), ancestor(X,Z).
+
+%5
+sibling(X,Y) :- parent(Z,X), parent(Z,Y). 
+
+%6
+brother(X,Y) :- parent(Z,X), parent(Z,Y),the_royal_males(X)
+
+%7 lists ancestor of louis.
+ancestor(X,louis).
+
+%8lists all grandchilden of queen mother.
+grandmother(queenmother,X).
+
+%9
+common_ancestors(anne,edward).
+
+%10
+has_brother_who_is_granddad(X) 
+
+%extra predicates for question 7-10
+grandmother(X,Y) :- the_royal_females(X),parent(X,Z), parent(Z,Y).
+
+granddad(X,Y) :- the_royal_males(X),parent(X,Z), parent(Z,Y).
+
+common_ancestors(X,Y) :- ancestor(Z,X),ancestor(Z,Y),write(Z).
+
+has_brother_who_is_granddad(X) :- brother(Y,X),granddad(Y,Z).
+
+
